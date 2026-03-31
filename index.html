@@ -7,26 +7,35 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:        #f0f4fa;
-    --navy:      #1a2a4a;
-    --navy-deep: #0d1a30;
-    --blue:      #2c4a80;
-    --blue-mid:  #3a5f9e;
-    --blue-light:#6a8ec2;
-    --blue-pale: #c8d8f0;
-    --silver:    #a8bcd8;
-    --text:      #1e2d45;
-    --text-soft: #4a6080;
+    --bg:         #f4f7fb;
+    --bg-soft:    #eef3fa;
+    --navy:       #182846;
+    --navy-deep:  #0b1630;
+    --blue:       #2f4f82;
+    --blue-mid:   #5f7fae;
+    --blue-light: #8da8cc;
+    --blue-pale:  #dce7f5;
+    --silver:     #b8c8df;
+    --gold:       #caa75e;
+    --gold-soft:  #e4c98f;
+    --gold-pale:  #f6ead0;
+    --gold-deep:  #a77f34;
+    --text:       #1b2940;
+    --text-soft:  #5f6d84;
+    --line-soft:  rgba(202,167,94,.35);
+    --shadow-gold: 0 12px 35px rgba(167,127,52,.18);
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
-  body{font-family:'Cormorant Garamond',serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+  body{font-family:'Cormorant Garamond',serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  body.ios-device{overscroll-behavior-y:none;}
+  .gpu,.fade-up,.tl-item,.env-wrap,.particle,.photo-card,.gold-fleck{will-change:transform,opacity;transform:translateZ(0);backface-visibility:hidden;}
 
   /* DIVIDER */
   .divider{display:flex;align-items:center;justify-content:center;gap:12px;margin:20px auto;width:220px;}
-  .divider-line{flex:1;height:1px;background:linear-gradient(to right,transparent,var(--blue-light));}
-  .divider-line.r{background:linear-gradient(to left,transparent,var(--blue-light));}
-  .divider-diamond{width:6px;height:6px;background:var(--blue-light);transform:rotate(45deg);}
+  .divider-line{flex:1;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent 140%);}
+  .divider-line.r{background:linear-gradient(to left,transparent,var(--gold),transparent 140%);}
+  .divider-diamond{width:7px;height:7px;background:linear-gradient(135deg,var(--gold-soft),var(--gold-deep));box-shadow:0 0 10px rgba(202,167,94,.25);transform:rotate(45deg);}
 
   /* PARTICLES */
   .env-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
@@ -94,7 +103,7 @@
   .corner-tl{top:18px;left:18px;}.corner-tr{top:18px;right:18px;transform:scaleX(-1);}
   .corner-bl{bottom:18px;left:18px;transform:scaleY(-1);}.corner-br{bottom:18px;right:18px;transform:scale(-1);}
 
-  .hero-ornament{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:8px;color:var(--blue);margin-bottom:14px;opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s ease;}
+  .hero-ornament{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:8px;color:var(--gold-deep);margin-bottom:14px;opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s ease;text-shadow:0 1px 0 rgba(255,255,255,.55);}
   .hero-ornament.visible{opacity:1;transform:translateY(0);}
   .hero-name{font-family:'Great Vibes',cursive;font-size:clamp(3.8rem,11vw,5.8rem);color:var(--navy);line-height:1.1;opacity:0;transition:opacity 1s ease,transform 1s ease;}
   #hn1{transform:translateX(-70px);transition-delay:.2s;}
@@ -102,7 +111,7 @@
   .hero-name.visible{opacity:1;transform:translateX(0)!important;}
   .hero-amp{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.3rem;color:var(--blue-mid);margin:4px 0;opacity:0;transition:opacity .8s ease .8s;}
   .hero-amp.visible{opacity:1;}
-  .hero-date{font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:6px;color:var(--blue);margin-top:22px;opacity:0;transform:translateY(18px);transition:opacity .8s ease 1.1s,transform .8s ease 1.1s;}
+  .hero-date{font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:6px;color:var(--gold-deep);margin-top:22px;opacity:0;transform:translateY(18px);transition:opacity .8s ease 1.1s,transform .8s ease 1.1s;}
   .hero-date.visible{opacity:1;transform:translateY(0);}
 
   .scroll-hint{position:absolute;bottom:38px;left:50%;transform:translateX(-50%);font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:4px;color:var(--blue);opacity:.55;animation:bob 2.2s ease-in-out infinite;}
@@ -116,19 +125,69 @@
   @keyframes heartbeat{0%,100%{transform:scale(1);}30%{transform:scale(1.18);}60%{transform:scale(1.06);}}
 
   /* CARD 3 BAPTISM */
-  #card-baptism{background:linear-gradient(165deg,#e8f0fa 0%,#f5f8fd 50%,#ddeaf8 100%);position:relative;overflow:hidden;}
-  #card-baptism::before{content:'✝';position:absolute;font-size:28rem;color:rgba(44,74,128,.04);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;line-height:1;}
+  #card-baptism{
+    background:
+      radial-gradient(circle at 15% 20%,rgba(202,167,94,.12) 0,rgba(202,167,94,0) 26%),
+      linear-gradient(165deg,#edf3fb 0%,#f9fbfe 48%,#e6effa 100%);
+    position:relative;overflow:hidden;
+  }
+  #card-baptism::before,
+  #card-baptism::after{
+    content:'';position:absolute;pointer-events:none;filter:blur(1px);
+    background-repeat:no-repeat;
+  }
+  #card-baptism::before{
+    inset:auto auto 12% -6%;
+    width:340px;height:340px;
+    background:
+      radial-gradient(circle at 30% 40%,rgba(113,150,199,.28) 0,rgba(113,150,199,.18) 18%,rgba(113,150,199,0) 56%),
+      radial-gradient(circle at 58% 62%,rgba(141,168,204,.22) 0,rgba(141,168,204,0) 54%);
+    opacity:.9;
+  }
+  #card-baptism::after{
+    inset:8% -4% auto auto;
+    width:300px;height:300px;
+    background:
+      radial-gradient(circle at 52% 48%,rgba(173,196,226,.26) 0,rgba(173,196,226,.16) 20%,rgba(173,196,226,0) 56%),
+      radial-gradient(circle at 28% 62%,rgba(202,167,94,.16) 0,rgba(202,167,94,0) 34%);
+    opacity:.88;
+  }
 
-  .baptism-bubble{position:absolute;border-radius:50%;background:radial-gradient(circle at 35% 35%,rgba(106,142,194,.22),rgba(44,74,128,.07));border:1px solid rgba(106,142,194,.2);animation:bubble-float ease-in-out infinite;pointer-events:none;}
+  .baptism-bubble{position:absolute;border-radius:50%;background:radial-gradient(circle at 35% 35%,rgba(106,142,194,.18),rgba(44,74,128,.04));border:1px solid rgba(141,168,204,.22);animation:bubble-float ease-in-out infinite;pointer-events:none;}
   @keyframes bubble-float{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-18px) scale(1.04);}}
 
-  .baptism-cross-ring{width:110px;height:110px;margin:0 auto 28px;border-radius:50%;background:linear-gradient(135deg,rgba(44,74,128,.1),rgba(106,142,194,.18));border:2px solid rgba(106,142,194,.4);display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 0 0 8px rgba(44,74,128,.06),0 0 0 16px rgba(44,74,128,.03);}
-  .baptism-cross-ring svg{width:52px;height:52px;}
+  .gold-fleck{
+    position:absolute;border-radius:999px;
+    background:radial-gradient(circle at 30% 30%,#fff7df 0,var(--gold-soft) 34%,var(--gold) 72%,rgba(202,167,94,0) 100%);
+    box-shadow:0 0 10px rgba(202,167,94,.24);
+    opacity:.9;pointer-events:none;
+  }
 
-  .baptism-title{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:6px;color:var(--blue);margin-bottom:10px;}
-  .baptism-subtitle{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:var(--text-soft);margin-bottom:28px;}
+  .baptism-watermark{
+    width:126px;height:126px;margin:0 auto 28px;border-radius:50%;
+    background:
+      radial-gradient(circle at 35% 35%,rgba(255,255,255,.88),rgba(255,255,255,.35) 42%,rgba(255,255,255,0) 74%),
+      radial-gradient(circle at 62% 58%,rgba(141,168,204,.26),rgba(141,168,204,.06) 60%,rgba(141,168,204,0) 80%),
+      linear-gradient(135deg,rgba(202,167,94,.12),rgba(141,168,204,.16));
+    border:1px solid rgba(202,167,94,.36);
+    box-shadow:0 0 0 10px rgba(202,167,94,.06),0 0 0 20px rgba(141,168,204,.05),var(--shadow-gold);
+    display:flex;align-items:center;justify-content:center;position:relative;
+  }
+  .baptism-watermark::before,
+  .baptism-watermark::after{
+    content:'';position:absolute;border-radius:999px;
+    background:linear-gradient(135deg,rgba(202,167,94,.95),rgba(228,201,143,.6));
+  }
+  .baptism-watermark::before{width:44px;height:3px;transform:rotate(-22deg);}
+  .baptism-watermark::after{width:3px;height:44px;transform:rotate(-22deg);}
+  .baptism-watermark span{
+    font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:4px;color:var(--gold-deep);margin-top:58px;
+  }
+
+  .baptism-title{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:6px;color:var(--gold-deep);margin-bottom:10px;}
+  .baptism-subtitle{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.08rem;color:var(--text-soft);margin-bottom:28px;}
   .baptism-name{font-family:'Great Vibes',cursive;font-size:clamp(3rem,9vw,4.5rem);color:var(--navy);line-height:1.1;margin-bottom:6px;}
-  .baptism-name-full{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:5px;color:var(--blue);margin-bottom:32px;}
+  .baptism-name-full{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:5px;color:var(--gold-deep);margin-bottom:32px;}
   .baptism-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--text-soft);line-height:1.8;max-width:440px;margin:0 auto;}
 
   /* VENUE */
@@ -138,12 +197,12 @@
   .venue-name{font-family:'Great Vibes',cursive;font-size:clamp(2.2rem,6.5vw,3.2rem);color:#e8f0ff;margin-bottom:8px;line-height:1.25;}
   .venue-details{font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:3px;color:rgba(200,216,240,.7);margin-bottom:6px;}
   .venue-address{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.9rem;color:rgba(200,216,240,.5);margin-bottom:30px;}
-  .map-btn{display:inline-block;padding:13px 36px;border:1px solid var(--blue-light);color:var(--blue-pale);font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:4px;text-decoration:none;transition:all .3s ease;background:transparent;cursor:pointer;}
-  .map-btn:hover{background:var(--blue-mid);color:#fff;border-color:var(--blue-mid);}
+  .map-btn{display:inline-block;padding:13px 36px;border:1px solid rgba(228,201,143,.7);color:var(--gold-pale);font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:4px;text-decoration:none;transition:all .3s ease;background:linear-gradient(135deg,rgba(202,167,94,.12),rgba(202,167,94,.03));cursor:pointer;box-shadow:var(--shadow-gold);}
+  .map-btn:hover{background:linear-gradient(135deg,var(--gold-deep),var(--gold));color:#fff;border-color:var(--gold-soft);}
 
   /* COUNTDOWN */
   #card-countdown{background:var(--bg);}
-  .countdown-title{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:6px;color:var(--blue);margin-bottom:44px;}
+  .countdown-title{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:6px;color:var(--gold-deep);margin-bottom:44px;}
   .countdown-grid{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin:20px 0;}
   .countdown-unit{text-align:center;min-width:80px;}
   .countdown-num{font-family:'Cinzel',serif;font-size:clamp(2.6rem,8vw,4.2rem);color:var(--navy);line-height:1;display:block;position:relative;}
@@ -166,7 +225,7 @@
 
   /* RSVP */
   #card-rsvp{background:var(--bg);}
-  .rsvp-title{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:5px;color:var(--blue);margin-bottom:8px;}
+  .rsvp-title{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:5px;color:var(--gold-deep);margin-bottom:8px;}
   .rsvp-family{font-family:'Great Vibes',cursive;font-size:clamp(2.2rem,6.5vw,3rem);color:var(--navy);margin-bottom:28px;}
   .rsvp-form{width:100%;max-width:440px;margin:0 auto;}
   .guest-list{text-align:left;margin-bottom:20px;}
@@ -175,15 +234,18 @@
   .guest-check{width:20px;height:20px;min-width:20px;border:1px solid var(--blue);border-radius:2px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
   .guest-item.checked .guest-check{background:var(--blue);color:#fff;font-size:.75rem;}
   .rsvp-add-guest{display:flex;gap:8px;margin-bottom:12px;}
-  .rsvp-add-guest input,.rsvp-note{border:1px solid rgba(44,74,128,.28);background:rgba(44,74,128,.04);font-family:'Cormorant Garamond',serif;font-size:.95rem;color:var(--text);outline:none;transition:border-color .3s;padding:11px 15px;}
+  .rsvp-add-guest input,.rsvp-note{border:1px solid rgba(202,167,94,.28);background:linear-gradient(135deg,rgba(255,255,255,.82),rgba(202,167,94,.05));font-family:'Cormorant Garamond',serif;font-size:.95rem;color:var(--text);outline:none;transition:border-color .3s, box-shadow .3s;padding:11px 15px;}
   .rsvp-add-guest input{flex:1;}
-  .rsvp-add-guest input:focus,.rsvp-note:focus{border-color:var(--blue);}
+  .rsvp-add-guest input:focus,.rsvp-note:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(202,167,94,.12);}
   .rsvp-note{width:100%;resize:none;margin-bottom:20px;display:block;}
-  .rsvp-add-btn{padding:11px 16px;border:1px solid var(--blue);background:transparent;color:var(--blue);font-family:'Cinzel',serif;font-size:.62rem;cursor:pointer;letter-spacing:2px;transition:all .2s;}
-  .rsvp-add-btn:hover{background:var(--blue);color:#fff;}
-  .rsvp-btn{width:100%;padding:15px;background:linear-gradient(135deg,var(--blue-mid),var(--navy));border:none;color:#dce8ff;font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:4px;cursor:pointer;transition:all .3s ease;}
-  .rsvp-btn:hover{background:linear-gradient(135deg,var(--blue),var(--navy-deep));transform:translateY(-1px);box-shadow:0 6px 20px rgba(26,42,74,.3);}
-  .rsvp-success{display:none;font-family:'Great Vibes',cursive;font-size:2rem;color:var(--blue);padding:20px;}
+  .rsvp-add-btn{padding:11px 16px;border:1px solid var(--gold);background:transparent;color:var(--gold-deep);font-family:'Cinzel',serif;font-size:.62rem;cursor:pointer;letter-spacing:2px;transition:all .2s;}
+  .rsvp-add-btn:hover{background:linear-gradient(135deg,var(--gold-deep),var(--gold));color:#fff;}
+  .rsvp-btn{width:100%;padding:15px;background:linear-gradient(135deg,var(--gold-deep),var(--gold));border:none;color:#fff8ef;font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:4px;cursor:pointer;transition:all .3s ease;box-shadow:var(--shadow-gold);}
+  .rsvp-btn:hover{background:linear-gradient(135deg,#8e6b2a,var(--gold));transform:translateY(-1px);box-shadow:0 10px 28px rgba(167,127,52,.24);}
+  .rsvp-success{display:none;font-family:'Great Vibes',cursive;font-size:2rem;color:var(--gold-deep);padding:20px;}
+  .rsvp-helper{margin:-2px 0 14px;font-size:.86rem;color:var(--text-soft);font-style:italic;text-align:left;min-height:1.2em;}
+  .rsvp-destination{margin-top:10px;font-size:.86rem;color:var(--text-soft);font-style:italic;text-align:left;}
+  .rsvp-destination strong{color:var(--gold-deep);font-style:normal;}
 
   /* CHILDREN */
   #card-children{background:linear-gradient(170deg,#0d1a30 0%,#162340 100%);color:var(--blue-pale);}
@@ -193,13 +255,42 @@
 
   /* PHOTOS */
   #card-photos{background:var(--bg);padding:80px 20px;}
-  .photos-title{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:5px;color:var(--blue);margin-bottom:40px;text-align:center;}
-  .photos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:500px;margin:0 auto 32px;}
-  .photo-placeholder{aspect-ratio:3/4;background:linear-gradient(135deg,#cdd8ee,#b8cce4);border:1px solid rgba(44,74,128,.2);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(26,42,74,.35);font-size:.85rem;position:relative;overflow:hidden;cursor:pointer;transition:transform .3s ease;}
-  .photo-placeholder:hover{transform:scale(1.02);}
-  .photo-placeholder input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
-  .photo-placeholder img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
-  .photo-label{font-size:1.5rem;margin-bottom:6px;}
+  .photos-title{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:5px;color:var(--gold-deep);margin-bottom:40px;text-align:center;}
+  .photos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:560px;margin:0 auto 20px;}
+  .photo-card{
+    aspect-ratio:3/4;
+    border-radius:22px;
+    overflow:hidden;
+    position:relative;
+    border:1px solid rgba(202,167,94,.25);
+    background:
+      linear-gradient(135deg,rgba(255,255,255,.85),rgba(202,167,94,.08)),
+      linear-gradient(135deg,#d8e3f1,#bfd0e5);
+    box-shadow:0 14px 36px rgba(24,40,70,.12), var(--shadow-gold);
+    transform-origin:center;
+    transition:transform .35s ease, box-shadow .35s ease;
+  }
+  .photo-card:hover{transform:translateY(-4px) scale(1.015);box-shadow:0 18px 42px rgba(24,40,70,.16),0 12px 34px rgba(167,127,52,.18);}
+  .photo-card img{
+    width:100%;height:100%;display:block;object-fit:cover;object-position:center center;
+  }
+  .photo-card.empty::before{
+    content:'';
+    position:absolute;inset:0;
+    background:
+      radial-gradient(circle at 18% 20%,rgba(202,167,94,.22) 0,rgba(202,167,94,0) 14%),
+      radial-gradient(circle at 82% 85%,rgba(141,168,204,.22) 0,rgba(141,168,204,0) 18%),
+      linear-gradient(145deg,rgba(255,255,255,.74),rgba(191,208,229,.82));
+  }
+  .photo-card.empty .photo-fallback{
+    position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    color:rgba(27,41,64,.55);text-align:center;padding:18px;
+  }
+  .photo-fallback strong{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:3px;color:var(--gold-deep);margin-bottom:8px;}
+  .photo-fallback span{font-size:.95rem;font-style:italic;line-height:1.45;}
+  .photos-help{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--text-soft);text-align:center;max-width:560px;margin:0 auto;line-height:1.6;
+  }
 
   /* THANKS */
   #card-thanks{background:radial-gradient(ellipse at center,#1a2e50,#080f1e);color:var(--blue-pale);}
@@ -207,8 +298,20 @@
   .thanks-names{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:7px;color:var(--blue-light);margin-top:30px;}
 
   /* MUSIC BTN */
-  #music-btn{position:fixed;bottom:24px;right:24px;width:46px;height:46px;background:linear-gradient(135deg,var(--blue-mid),var(--navy));border:1px solid var(--blue-light);border-radius:50%;color:#dce8ff;font-size:1.1rem;cursor:pointer;z-index:100;display:none;box-shadow:0 4px 18px rgba(26,42,74,.45);transition:transform .2s;align-items:center;justify-content:center;}
+  #music-btn{position:fixed;bottom:24px;right:24px;width:46px;height:46px;background:linear-gradient(135deg,var(--gold-deep),var(--gold));border:1px solid var(--gold-soft);border-radius:50%;color:#fff8ef;font-size:1.1rem;cursor:pointer;z-index:100;display:none;box-shadow:0 6px 18px rgba(167,127,52,.32);transition:transform .2s;align-items:center;justify-content:center;}
   #music-btn:hover{transform:scale(1.1);}
+
+  .ios-device .env-wrap{filter:drop-shadow(0 16px 28px rgba(10,30,70,.42));animation-duration:4.4s;}
+  .ios-device .particle:nth-child(n+17){display:none;}
+  .ios-device .fade-up,.ios-device .tl-item{transition-duration:.62s;}
+  .ios-device .photo-card:hover{transform:none;}
+  .ios-device #envelope-screen.hide{transform:none;}
+
+  @media(prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .particle,.env-wrap,.quote-heart,.scroll-hint,.baptism-bubble{animation:none!important;}
+    .fade-up,.tl-item,#env-flap,#env-letter,#main-content,#envelope-screen{transition:none!important;}
+  }
 
   @media(max-width:480px){
     .countdown-unit{min-width:62px;}
@@ -221,7 +324,7 @@
 <body>
 
 <audio id="wedding-music" loop preload="none">
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  <source src="assets/cancion.mp3" type="audio/mpeg">
 </audio>
 
 <!-- ════════════════ ENVELOPE SCREEN ════════════════ -->
@@ -402,19 +505,15 @@
     <div class="baptism-bubble" style="width:55px;height:55px;bottom:18%;right:5%;animation-duration:9.5s;animation-delay:2.2s"></div>
     <div class="baptism-bubble" style="width:42px;height:42px;top:48%;left:1%;animation-duration:11s;animation-delay:3s"></div>
     <div class="baptism-bubble" style="width:60px;height:60px;top:30%;right:2%;animation-duration:10s;animation-delay:1.5s"></div>
+    <div class="gold-fleck" style="width:10px;height:10px;top:14%;left:22%"></div>
+    <div class="gold-fleck" style="width:7px;height:7px;top:22%;right:18%"></div>
+    <div class="gold-fleck" style="width:12px;height:12px;bottom:18%;left:18%"></div>
+    <div class="gold-fleck" style="width:8px;height:8px;bottom:11%;right:24%"></div>
+    <div class="gold-fleck" style="width:5px;height:5px;top:52%;right:9%"></div>
 
     <div class="card-inner">
-      <div class="baptism-cross-ring fade-up" data-scroll>
-        <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="cG" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%"  stop-color="#6a8ec2"/>
-              <stop offset="100%" stop-color="#1a2a4a"/>
-            </linearGradient>
-          </defs>
-          <rect x="23" y="6"  width="6" height="40" rx="2" fill="url(#cG)"/>
-          <rect x="6"  y="18" width="40" height="6"  rx="2" fill="url(#cG)"/>
-        </svg>
+      <div class="baptism-watermark fade-up" data-scroll>
+        <span>AGUA · LUZ · AMOR</span>
       </div>
 
       <p class="baptism-title fade-up" data-scroll style="transition-delay:.1s">Y TAMBIÉN CELEBRAMOS</p>
@@ -503,23 +602,22 @@
   <section class="card" id="card-rsvp">
     <div class="card-inner">
       <p class="rsvp-title fade-up" data-scroll>INVITACIÓN PARA</p>
-      <div class="rsvp-family fade-up" data-scroll style="transition-delay:.1s">La Familia</div>
+      <div class="rsvp-family fade-up" id="rsvp-family-name" data-scroll style="transition-delay:.1s">La Familia</div>
       <div class="divider fade-up" data-scroll style="transition-delay:.15s">
         <div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line r"></div>
       </div>
       <div class="rsvp-form fade-up" data-scroll style="transition-delay:.2s">
         <p style="font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:3px;color:var(--blue);margin-bottom:12px;text-align:left">CONFIRMA TU ASISTENCIA</p>
-        <div class="guest-list" id="guest-list">
-          <div class="guest-item" onclick="toggleGuest(this)"><div class="guest-check"></div><span>Tu nombre</span></div>
-          <div class="guest-item" onclick="toggleGuest(this)"><div class="guest-check"></div><span>Acompañante</span></div>
-        </div>
-        <div class="rsvp-add-guest">
+        <div class="guest-list" id="guest-list"></div>
+        <div class="rsvp-add-guest" id="rsvp-add-guest-row">
           <input type="text" id="new-guest-input" placeholder="Añadir invitado...">
           <button class="rsvp-add-btn" onclick="addGuest()">+ AÑADIR</button>
         </div>
+        <p class="rsvp-helper" id="rsvp-helper"></p>
         <textarea class="rsvp-note" rows="3" placeholder="¿Alguna alergia, intolerancia o mensaje para los novios?"></textarea>
         <button class="rsvp-btn" onclick="confirmRSVP()">CONFIRMAR ASISTENCIA</button>
-        <div class="rsvp-success" id="rsvp-success">¡Gracias! Os esperamos 💙</div>
+        <p class="rsvp-destination" id="rsvp-destination"></p>
+        <div class="rsvp-success" id="rsvp-success">¡Gracias! Os esperamos ✨</div>
       </div>
     </div>
   </section>
@@ -535,7 +633,7 @@
         <div class="divider-line r" style="background:linear-gradient(to left,transparent,rgba(200,216,240,.4))"></div>
       </div>
       <p class="children-msg fade-up" data-scroll style="transition-delay:.2s">
-        ¡Los niños están más que bienvenidos! Queremos que toda la familia forme parte de este día tan especial. ¡Cuantos más, mejor! 🥰
+        ¡Los niños son bién recibidos! Queremos que toda la familia forme parte de este día tan especial. ¡Cuantos más, mejor! 🥰
       </p>
     </div>
   </section>
@@ -547,13 +645,11 @@
       <div class="divider fade-up" data-scroll style="margin-bottom:34px;transition-delay:.1s">
         <div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line r"></div>
       </div>
-      <div class="photos-grid fade-up" data-scroll style="transition-delay:.2s">
-        <div class="photo-placeholder" id="photo1"><input type="file" accept="image/*" onchange="loadPhoto(this,'photo1')"><span class="photo-label">📷</span><span>Añadir foto</span></div>
-        <div class="photo-placeholder" id="photo2"><input type="file" accept="image/*" onchange="loadPhoto(this,'photo2')"><span class="photo-label">📷</span><span>Añadir foto</span></div>
-        <div class="photo-placeholder" id="photo3"><input type="file" accept="image/*" onchange="loadPhoto(this,'photo3')"><span class="photo-label">📷</span><span>Añadir foto</span></div>
-        <div class="photo-placeholder" id="photo4"><input type="file" accept="image/*" onchange="loadPhoto(this,'photo4')"><span class="photo-label">📷</span><span>Añadir foto</span></div>
-      </div>
-      <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.8rem;color:rgba(26,42,74,.35);text-align:center" class="fade-up" data-scroll>Pulsa en cada recuadro para añadir vuestras fotos</p>
+      <div class="photos-grid fade-up" data-scroll style="transition-delay:.2s" id="photos-grid"></div>
+      <p class="photos-help fade-up" data-scroll>
+        Esta sección ya está preparada para que pongas tus fotos reales. Solo tendrás que sustituir las rutas en el bloque
+        <strong>PHOTO_SLOTS</strong> del script y dejar tus imágenes en formato vertical 3:4.
+      </p>
     </div>
   </section>
 
@@ -578,62 +674,716 @@
 </div>
 
 <script>
+/* DEVICE */
+const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+if (IS_IOS) document.body.classList.add('ios-device');
+
+/* CONFIG */
+const RSVP_CONFIG = {
+  mode: 'whatsapp', // 'none' | 'mailto' | 'whatsapp'
+  email: 'TU_CORREO@EJEMPLO.COM',
+  whatsapp: '34622160340',
+  subject: 'Confirmación boda Cris & Jose'
+};
+
+/*
+  Genera un enlace por familia así:
+  https://tudominio.com/?inv=familia-ruiz
+
+  Rellena aquí todos tus invitados.
+*/
+const INVITES = {
+  'familia-huerta-miro': {
+    title: 'La Familia Huerta Miró',
+    guests: ['Pepe', 'Reme', 'Che'],
+    maxExtraGuests: 0
+  },
+  'familia-garcia-ruiz': {
+    title: 'La Familia García Ruiz',
+    guests: ['Almu', 'JR', 'Laura', 'Pablo'],
+    maxExtraGuests: 0
+  },
+  'familia-garcia': {
+    title: 'La Familia García Perez',
+    guests: ['Sergio', 'Ángela'],
+    maxExtraGuests: 0
+  },
+  'familia-lopez-ortega': {
+    title: 'La Familia López Ortega',
+    guests: ['Chachillo', 'Chachilla'],
+    maxExtraGuests: 0
+  },
+  'familia-castillo-lopez': {
+    title: 'La Familia Castillo López',
+    guests: ['Yolanda', 'German', 'Gonzalo'],
+    maxExtraGuests: 0
+  },
+  'familia-vidilla-casado': {
+    title: 'La Familia Vidilla Casado',
+    guests: ['Antonia', 'Joan Padre', 'Joan Hijo'],
+    maxExtraGuests: 0
+  },
+  'familia-casado-canaveras': {
+    title: 'La Familia Casado Cañaveras',
+    guests: ['Jorge', 'Paqui', 'Ander'],
+    maxExtraGuests: 0
+  },
+  'familia-manchon-casado': {
+    title: 'La Familia Manchón Casado',
+    guests: ['Georgina', 'Alex'],
+    maxExtraGuests: 0
+  },
+  'familia-lopez-macias': {
+    title: 'La Familia López Macías',
+    guests: ['Toni', 'Vane', 'Paulita'],
+    maxExtraGuests: 0
+  },
+  'familia-auzmendi-lopez': {
+    title: 'La Familia Auzmendi López',
+    guests: ['Lolilla', 'Jose', 'Emma'],
+    maxExtraGuests: 0
+  },
+  'familia-rubio-gomez': {
+    title: 'La Familia Rubio Gómez',
+    guests: ['Tobi', 'Puri'],
+    maxExtraGuests: 0
+  },
+  'familia-rubio-pereira': {
+    title: 'La Familia Rubio Pereira',
+    guests: ['Jesús', 'Imma'],
+    maxExtraGuests: 0
+  },
+  'familia-casablancas-rubio': {
+    title: 'La Familia Casablancas Rubio',
+    guests: ['Erika', 'Albert', 'Adrian', 'Maria'],
+    maxExtraGuests: 0
+  },
+  'familia-cuevas-moreno': {
+    title: 'La Familia Cuevas Moreno',
+    guests: ['Rafael', 'Rafaela'],
+    maxExtraGuests: 1
+  },
+  'familia-pintor-ruiz': {
+    title: 'La Familia Pintor Ruiz',
+    guests: ['Tita Encarni', 'Tito Jose Luis'],
+    maxExtraGuests: 0
+  },
+  'familia-pintor-garcia': {
+    title: 'La Familia Pintor García',
+    guests: ['Alberto', 'Esther'],
+    maxExtraGuests: 0
+  },
+  'familia-lopez-pintor': {
+    title: 'La Familia López Pintor',
+    guests: ['Luara', 'Luara hija', 'Emilio', 'Alvaro'],
+    maxExtraGuests: 0
+  },
+  'familia-fernandez-ruiz': {
+    title: 'La Familia Fernández Ruiz',
+    guests: ['Maria Jesús', 'Miguel Ángel'],
+    maxExtraGuests: 0
+  },
+  'familia-huertas-ruiz': {
+    title: 'La Familia Huertas Ruiz',
+    guests: ['Memi', 'Juan Pablo', 'Maria', 'Elena'],
+    maxExtraGuests: 0
+  },
+  'familia-martin-ruiz': {
+    title: 'La Familia Martín Ruiz',
+    guests: ['Bibi', 'Oscar'],
+    maxExtraGuests: 0
+  },
+  'familia-ruiz': {
+    title: 'La Familia Ruiz Jaime',
+    guests: ['Tito Antonio', 'Lali'],
+    maxExtraGuests: 0
+  },
+  'familia-ruiz-cabezas': {
+    title: 'La Familia Ruiz Cabezas',
+    guests: ['Primo Antonio', 'Julia', 'Blanca'],
+    maxExtraGuests: 0
+  },
+  'familia-ruiz-lopez': {
+    title: 'La Familia Ruiz López',
+    guests: ['Migue', 'Gema', 'Martin', 'Ana'],
+    maxExtraGuests: 0
+  },
+  'familia-cava-lopez': {
+    title: 'La Familia Cava López',
+    guests: ['Tata Pili', 'Antonio Jose', 'Alejandro', 'Ruth'],
+    maxExtraGuests: 0
+  },
+  'familia-santiago-sanchez': {
+    title: 'La Familia Santiago Sánchez',
+    guests: ['Isabel', 'Carlos', 'Paula', 'Lucia'],
+    maxExtraGuests: 0
+  },
+  'familia-roldan-garcia': {
+    title: 'La Familia Roldán Garcia',
+    guests: ['Oscar', 'Lola', 'Ines'],
+    maxExtraGuests: 0
+  },
+  'familia-cadenas-martin': {
+    title: 'La Familia Cadenas Martín',
+    guests: ['Miri', 'Diego'],
+    maxExtraGuests: 0
+  },
+  'familia-exposito': {
+    title: 'La Familia Exposito',
+    guests: ['Dani', 'Nati'],
+    maxExtraGuests: 0
+  },
+  'familia-castillo-malagon': {
+    title: 'La Familia Castillo Malagón',
+    guests: ['Miguel', 'Pilar', 'Alegra', 'Elio'],
+    maxExtraGuests: 0
+  },
+  'familia-gomez-barrilado-0': {
+    title: 'La Familia Gómez Barrilado',
+    guests: ['Encarni', 'Sebastian'],
+    maxExtraGuests: 0
+  },
+  'familia-sanchez-gomez': {
+    title: 'La Familia Sanchez Gómez',
+    guests: ['Eli', 'Jesus', 'Emma'],
+    maxExtraGuests: 0
+  },
+  'familia-cuesta-gomez': {
+    title: 'La Familia Cuesta Gómez',
+    guests: ['Montse', 'Antonio', 'Antonio "mi coco"', 'Martina'],
+    maxExtraGuests: 0
+  },
+  'familia-sanchez-molero': {
+    title: 'La Familia Sanchez Molero',
+    guests: ['Pepi'],
+    maxExtraGuests: 0
+  },
+  'familia-sanchez-madrid': {
+    title: 'La Familia Sanchez Madrid',
+    guests: ['Inma', 'Pepe'],
+    maxExtraGuests: 0
+  },
+  'familia-corral-barrilado': {
+    title: 'La Familia Corral Barrilado',
+    guests: ['Tita Mon', 'Juanfra', 'Claudia', 'Juan Pablo'],
+    maxExtraGuests: 0
+  },
+  'familia-barrilado-luzon': {
+    title: 'La Familia Barrilado Luzón',
+    guests: ['Juan', 'Anabel', 'Laura', 'Juan'],
+    maxExtraGuests: 0
+  },
+  'familia-barrilado-fernandez': {
+    title: 'La Familia Barrilado Fernandez',
+    guests: ['Paco', 'Mª Dolores'],
+    maxExtraGuests: 0
+  },
+  'familia-garrido-barrilado': {
+    title: 'La Familia Garrido Barrilado',
+    guests: ['Teresa', 'Carlos', 'Carla', 'Antonio'],
+    maxExtraGuests: 0
+  },
+  'familia-barrilado-delgado': {
+    title: 'La Familia Barrilado Delgado',
+    guests: ['Fco Javier', 'Jennifer', 'Javier'],
+    maxExtraGuests: 0
+  },
+  'familia-garcia-sanchez': {
+    title: 'La Familia Garcia Sanchez',
+    guests: ['Paco', 'Antonia'],
+    maxExtraGuests: 0
+  },
+  'familia-gomez-gomez': {
+    title: 'La Familia Gómez Gómez',
+    guests: ['Tita Mª Carmen'],
+    maxExtraGuests: 0
+  },
+  'familia-gomez-ceballos-2': {
+    title: 'La Familia Gómez Ceballos',
+    guests: ['Victoria', 'Miguel', 'Estefania'],
+    maxExtraGuests: 0
+  },
+  'familia-gomez-ceballos-1': {
+    title: 'La Familia Gómez Ceballos',
+    guests: ['Victoria', 'Ian'],
+    maxExtraGuests: 0
+  },
+  'familia-gomez-ceballos-3': {
+    title: 'La Familia Gómez Ceballos',
+    guests: ['Miguel', 'Ana', 'Miguel', 'Ana'],
+    maxExtraGuests: 0
+  },
+  'familia-gomez-1': {
+    title: 'La Familia Gómez',
+    guests: ['Oscar', 'Zoraida', 'Zoraida'],
+    maxExtraGuests: 0
+  },
+  'familia-gomez-barrilado-1': {
+    title: 'La Familia Gómez Barrilado',
+    guests: ['Paquita', 'Antonio'],
+    maxExtraGuests: 0
+  },
+  'familia-gomez-barrilado-2': {
+    title: 'La Familia Gómez Barrilado',
+    guests: ['Paloma', 'David', 'Paola', 'David', 'Antonio'],
+    maxExtraGuests: 0
+  },
+  'familia-gomez-barrilado-3': {
+    title: 'La Familia Gómez Barrilado',
+    guests: ['Carlos', 'Ana'],
+    maxExtraGuests: 0
+  },
+  'familia-lopez-abril': {
+    title: 'La Familia López Abril',
+    guests: ['Maria', 'Jose', 'Pablo', 'Raul'],
+    maxExtraGuests: 0
+  },
+  'familia-vigo-medina': {
+    title: 'La Familia Vigo Medina',
+    guests: ['Belén', 'Vigo', 'Paula', 'Lucía'],
+    maxExtraGuests: 0
+  },
+  'familia-las-rubias': {
+    title: 'La Familia Las Rubias',
+    guests: ['Esther', 'Patri'],
+    maxExtraGuests: 0
+  },
+  'familia-fernandez-corral': {
+    title: 'La Familia Fernandez Corral',
+    guests: ['Lourdes', 'Gus', 'Alejandro', 'Giulia'],
+    maxExtraGuests: 0
+  },
+  'familia-martin-robles': {
+    title: 'La Familia Martin Robles',
+    guests: ['Jorge', 'Amanda', 'Marco'],
+    maxExtraGuests: 0
+  },
+  'familia-donaire': {
+    title: 'La Familia Donaire',
+    guests: ['Asun', 'Felipe'],
+    maxExtraGuests: 0
+  },
+  'familia-hurtado-sanchez': {
+    title: 'La Familia Hurtado Sánchez',
+    guests: ['Cynthia', 'Pablo', 'Maria'],
+    maxExtraGuests: 0
+  },
+  'familia-palomino': {
+    title: 'La Familia Palomino',
+    guests: ['Ivonne', 'Emilio', 'Ares'],
+    maxExtraGuests: 0
+  },
+  'familia-lopez-prados': {
+    title: 'La Familia López Prados',
+    guests: ['Paquillo', 'Toñi', 'Maria'],
+    maxExtraGuests: 0
+  },
+  'familia-sanchez-viedma': {
+    title: 'La Familia Sánchez Viedma',
+    guests: ['Maria del Mar'],
+    maxExtraGuests: 1
+  },
+  'familia-viedma': {
+    title: 'La Familia Viedma',
+    guests: ['Tita María'],
+    maxExtraGuests: 1
+  },
+  'familia-morales-abril': {
+    title: 'La Familia Morales Abril',
+    guests: ['Laura', 'Pepe'],
+    maxExtraGuests: 0
+  },
+  'familia-barrilado-abril': {
+    title: 'La Familia Barrilado Abril',
+    guests: ['Paqui', 'Antonio'],
+    maxExtraGuests: 0
+  },
+  'familia-abril-barrilado': {
+    title: 'La Familia Abril Barrilado',
+    guests: ['Marisol', 'Paco'],
+    maxExtraGuests: 0
+  },
+  'familia-torres-robles': {
+    title: 'La Familia Torres Robles',
+    guests: ['Rosa', 'José'],
+    maxExtraGuests: 0
+  },
+  'familia-manzano-lopez': {
+    title: 'La Familia Manzano López',
+    guests: ['Jose Luis', 'Jose', 'Carmen', 'Marta'],
+    maxExtraGuests: 0
+  },
+  'familia-gomez-roldan': {
+    title: 'La Familia Gómez Roldán',
+    guests: ['Tito Paco', 'Tita Ali'],
+    maxExtraGuests: 0
+  },
+  'familia-gomez-roldan-1': {
+    title: 'Laura y Familia',
+    guests: ['Laura', 'Familia'],
+    maxExtraGuests: 3
+  },
+  'familia-gomez-roldan-2': {
+    title: 'Miguel y Familia',
+    guests: ['Miguel', 'Belén'],
+    maxExtraGuests: 2
+  },
+  'familia-gomez-roldan-3': {
+    title: 'Francisco y Familia',
+    guests: ['Francisco', 'Pareja'],
+    maxExtraGuests: 0
+  },
+  'familia-Zapata-Medina': {
+    title: 'La Familia Zapata Medina',
+    guests: ['Mar', 'Dani', 'Daniela', 'Mario'],
+    maxExtraGuests: 0
+  },
+  'familia-Madrid': {
+    title: 'La Familia Madrid',
+    guests: ['Oscar'],
+    maxExtraGuests: 0
+  },
+  'familia-ixela': {
+    title: 'Ixela y Familia',
+    guests: ['Ixela', 'Pareja'],
+    maxExtraGuests: 0
+  },
+  'familia-gomez-roldan-4': {
+    title: 'La Familia Gómez',
+    guests: ['Francisco', 'Pareja'],
+    maxExtraGuests: 0
+  },
+  'dani-moya-arco-solo': {
+    title: 'Dani Moya Arco',
+    guests: ['Dani'],
+    maxExtraGuests: 1
+  },
+  'franci-garcia-lopez-solo': {
+    title: 'Franci García López',
+    guests: ['Franci'],
+    maxExtraGuests: 1
+  },
+  'tita-enriqueta-lopez-cuevas-solo': {
+    title: 'Enriqueta López Cuevas',
+    guests: ['Tita Enriqueta'],
+    maxExtraGuests: 1
+  },
+  'rafalito-lopez-rodriguez-solo': {
+    title: 'Rafael López Rodriguez',
+    guests: ['Rafalito'],
+    maxExtraGuests: 1
+  },
+  'tita-emilia-huete-solo': {
+    title: 'Emilia Huete',
+    guests: ['Tita Emilia'],
+    maxExtraGuests: 1
+  },
+  'tita-encarna-garcia-leyva-solo': {
+    title: 'Encarna García Leyva',
+    guests: ['Tita Encarna'],
+    maxExtraGuests: 1
+  },
+  'tito-miguelin-garcia-leyva-solo': {
+    title: 'Miguel García Leyva',
+    guests: ['Tito Miguelín'],
+    maxExtraGuests: 1
+  },
+  'paco-gomez-barrilado-4-solo': {
+    title: 'Paco Gómez Barrilado',
+    guests: ['Paco'],
+    maxExtraGuests: 1
+  },
+  'melani-hurtado-sanchez-1-solo': {
+    title: 'Melani Hurtado Sánchez',
+    guests: ['Melani'],
+    maxExtraGuests: 1
+  }
+};
+
+const DEFAULT_INVITE = {
+  code: 'general',
+  title: 'La Familia',
+  guests: ['Tu nombre', 'Acompañante'],
+  maxExtraGuests: 1
+};
+
+const PHOTO_SLOTS = [
+  { src: 'assets/foto-1.jpeg', alt: 'Cris y Jose 1', position: 'center center' },
+  { src: 'assets/foto-2.jpeg', alt: 'Cris y Jose 2', position: 'center center' },
+  { src: 'assets/foto-3.jpeg', alt: 'Cris y Jose 3', position: 'center center' },
+  { src: 'assets/foto-4.jpeg', alt: 'Cris y Jose 4', position: 'center center' },
+  { src: 'assets/foto-5.jpeg', alt: 'Cris y Jose 5', position: 'center center' },
+  { src: 'assets/foto-6.jpeg', alt: 'Cris y Jose 6', position: 'center center' },
+  { src: 'assets/foto-7.jpeg', alt: 'Cris y Jose 7', position: 'center center' },
+  { src: 'assets/foto-8.jpeg', alt: 'Cris y Jose 8', position: 'center center' },
+  { src: 'assets/foto-9.jpeg', alt: 'Cris y Jose 9', position: 'center center' },
+  { src: 'assets/foto-10.jpeg', alt: 'Cris y Jose 10', position: 'center center' },
+  { src: 'assets/foto-11.jpeg', alt: 'Cris y Jose 11', position: 'center center' },
+  { src: 'assets/foto-12.jpeg', alt: 'Cris y Jose 12', position: 'center center' },
+  { src: 'assets/foto-13.jpeg', alt: 'Cris y Jose 13', position: 'center center' },
+  { src: 'assets/foto-14.jpeg', alt: 'Cris y Jose 14', position: 'center center' },
+  { src: 'assets/foto-15.jpeg', alt: 'Cris y Jose 15', position: 'center center' },
+  { src: 'assets/foto-16.jpeg', alt: 'Cris y Jose 16', position: 'center center' },
+  { src: 'assets/foto-17.jpeg', alt: 'Cris y Jose 17', position: 'center center' },
+  { src: 'assets/foto-18.jpeg', alt: 'Cris y Jose 18', position: 'center center' },
+  { src: 'assets/foto-19.jpeg', alt: 'Cris y Jose 19', position: 'center center' },
+  { src: 'assets/foto-20.jpeg', alt: 'Cris y Jose 20', position: 'center center' },
+  { src: 'assets/foto-21.jpeg', alt: 'Cris y Jose 21', position: 'center center' },
+  { src: 'assets/foto-22.jpeg', alt: 'Cris y Jose 22', position: 'center center' }
+];
+
 /* PARTICLES */
 (function(){
-  const c=document.getElementById('particles');
-  const cols=['#c8d8f0','#a8bcd8','#dce8ff','#6a8ec2','#e0ecff'];
-  for(let i=0;i<38;i++){
-    const p=document.createElement('div'), s=(1+Math.random()*3.5)+'px';
-    p.className='particle';
-    p.style.cssText=`left:${Math.random()*100}%;width:${s};height:${s};background:${cols[Math.floor(Math.random()*cols.length)]};animation-duration:${7+Math.random()*11}s;animation-delay:${Math.random()*11}s;`;
+  const c = document.getElementById('particles');
+  const cols = ['#e9d5a1','#d7e3f3','#f5ead2','#8da8cc','#caa75e'];
+  const total = IS_IOS ? 16 : 28;
+  for(let i=0;i<total;i++){
+    const p = document.createElement('div');
+    const s = (1 + Math.random() * 3.2) + 'px';
+    p.className = 'particle';
+    p.style.cssText = `left:${Math.random()*100}%;width:${s};height:${s};background:${cols[Math.floor(Math.random()*cols.length)]};animation-duration:${7+Math.random()*11}s;animation-delay:${Math.random()*10}s;`;
     c.appendChild(p);
   }
 })();
 
 /* OPEN */
 function openInvitation(){
-  const wrap=document.getElementById('env-wrap');
+  const wrap = document.getElementById('env-wrap');
   wrap.classList.add('env-open');
+  const hideDelay = IS_IOS ? 620 : 720;
+
   setTimeout(()=>{
     document.getElementById('envelope-screen').classList.add('hide');
     document.getElementById('main-content').classList.add('visible');
-    document.getElementById('music-btn').style.display='flex';
+    document.getElementById('music-btn').style.display = 'flex';
     setTimeout(()=>{
-      ['hero-ornament','hn1','hero-amp','hn2','hero-date'].forEach(id=>document.getElementById(id).classList.add('visible'));
-    },380);
-  },720);
-  const a=document.getElementById('wedding-music');
-  a.volume=0.45; a.play().catch(()=>{});
+      ['hero-ornament','hn1','hero-amp','hn2','hero-date'].forEach(id=>{
+        const el = document.getElementById(id);
+        if (el) el.classList.add('visible');
+      });
+    }, IS_IOS ? 220 : 380);
+  }, hideDelay);
+
+  const a = document.getElementById('wedding-music');
+  a.volume = 0.42;
+  a.play().catch(()=>{});
 }
 
 /* MUSIC */
 function toggleMusic(){
-  const a=document.getElementById('wedding-music'),b=document.getElementById('music-btn');
-  a.paused?(a.play(),b.textContent='🎵'):(a.pause(),b.textContent='🔇');
+  const a = document.getElementById('wedding-music');
+  const b = document.getElementById('music-btn');
+  if (a.paused) {
+    a.play();
+    b.textContent = '🎵';
+  } else {
+    a.pause();
+    b.textContent = '🔇';
+  }
 }
 
 /* SCROLL */
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.15});
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting) entry.target.classList.add('visible');
+  });
+},{threshold: IS_IOS ? 0.08 : 0.15, rootMargin:'0px 0px -6% 0px'});
 document.querySelectorAll('.fade-up[data-scroll],.tl-item[data-scroll]').forEach(el=>obs.observe(el));
 
 /* COUNTDOWN */
 function tick(){
-  const d=new Date('2026-05-01T12:00:00')-new Date();
-  if(d<=0){['cd-days','cd-hrs','cd-min','cd-sec'].forEach(id=>document.getElementById(id).textContent='00');return;}
-  document.getElementById('cd-days').textContent=String(Math.floor(d/86400000)).padStart(2,'0');
-  document.getElementById('cd-hrs').textContent=String(Math.floor(d%86400000/3600000)).padStart(2,'0');
-  document.getElementById('cd-min').textContent=String(Math.floor(d%3600000/60000)).padStart(2,'0');
-  document.getElementById('cd-sec').textContent=String(Math.floor(d%60000/1000)).padStart(2,'0');
+  const d = new Date('2026-05-01T12:00:00') - new Date();
+  if(d <= 0){
+    ['cd-days','cd-hrs','cd-min','cd-sec'].forEach(id=>document.getElementById(id).textContent='00');
+    return;
+  }
+  document.getElementById('cd-days').textContent = String(Math.floor(d/86400000)).padStart(2,'0');
+  document.getElementById('cd-hrs').textContent = String(Math.floor(d%86400000/3600000)).padStart(2,'0');
+  document.getElementById('cd-min').textContent = String(Math.floor(d%3600000/60000)).padStart(2,'0');
+  document.getElementById('cd-sec').textContent = String(Math.floor(d%60000/1000)).padStart(2,'0');
 }
-tick();setInterval(tick,1000);
+tick();
+setInterval(tick,1000);
 
 /* RSVP */
-function toggleGuest(el){el.classList.toggle('checked');el.querySelector('.guest-check').textContent=el.classList.contains('checked')?'✓':'';}
-function addGuest(){const i=document.getElementById('new-guest-input'),n=i.value.trim();if(!n)return;const d=document.createElement('div');d.className='guest-item';d.onclick=function(){toggleGuest(this);};d.innerHTML=`<div class="guest-check"></div><span>${n}</span>`;document.getElementById('guest-list').appendChild(d);i.value='';}
-function confirmRSVP(){document.querySelector('.rsvp-btn').style.display='none';document.getElementById('rsvp-success').style.display='block';}
+let currentInvite = { ...DEFAULT_INVITE };
+let currentGuestNames = [...DEFAULT_INVITE.guests];
+let extraGuestsAdded = 0;
+
+function toggleGuest(el){
+  el.classList.toggle('checked');
+  const box = el.querySelector('.guest-check');
+  box.textContent = el.classList.contains('checked') ? '✓' : '';
+}
+
+function makeGuestRow(name){
+  const row = document.createElement('div');
+  row.className = 'guest-item';
+  row.onclick = function(){ toggleGuest(this); };
+  row.innerHTML = `<div class="guest-check"></div><span>${escapeHtml(name)}</span>`;
+  return row;
+}
+
+function renderGuestList(){
+  const list = document.getElementById('guest-list');
+  list.innerHTML = '';
+  currentGuestNames.forEach(name => list.appendChild(makeGuestRow(name)));
+}
+
+function updateRSVPUI(){
+  document.getElementById('rsvp-family-name').textContent = currentInvite.title || DEFAULT_INVITE.title;
+  renderGuestList();
+
+  const helper = document.getElementById('rsvp-helper');
+  const addRow = document.getElementById('rsvp-add-guest-row');
+
+  if ((currentInvite.maxExtraGuests || 0) <= 0) {
+    addRow.style.display = 'none';
+    helper.textContent = 'Esta invitación no permite añadir acompañantes.';
+    return;
+  }
+
+  addRow.style.display = 'flex';
+  const remaining = Math.max(0, (currentInvite.maxExtraGuests || 0) - extraGuestsAdded);
+  if (remaining === 0) {
+    helper.textContent = 'Ya has alcanzado el máximo de acompañantes permitidos para esta invitación.';
+  } else if (remaining === 1) {
+    helper.textContent = 'Puedes añadir 1 acompañante más.';
+  } else {
+    helper.textContent = `Puedes añadir ${remaining} acompañantes más.`;
+  }
+}
+
+function initInviteFromURL(){
+  const params = new URLSearchParams(window.location.search);
+  const inviteCode = (params.get('inv') || '').trim();
+  if (inviteCode && INVITES[inviteCode]) {
+    currentInvite = {
+      code: inviteCode,
+      ...INVITES[inviteCode]
+    };
+  } else {
+    currentInvite = { ...DEFAULT_INVITE };
+  }
+  currentGuestNames = [...(currentInvite.guests || [])];
+  extraGuestsAdded = 0;
+  updateRSVPUI();
+}
+
+function addGuest(){
+  const maxExtra = currentInvite.maxExtraGuests || 0;
+  if (extraGuestsAdded >= maxExtra) {
+    updateRSVPUI();
+    return;
+  }
+
+  const input = document.getElementById('new-guest-input');
+  const name = input.value.trim();
+  if(!name) return;
+
+  currentGuestNames.push(name);
+  extraGuestsAdded += 1;
+  input.value = '';
+  updateRSVPUI();
+
+  const guestRows = document.querySelectorAll('#guest-list .guest-item');
+  const lastRow = guestRows[guestRows.length - 1];
+  if (lastRow) toggleGuest(lastRow);
+}
+
+function getSelectedGuests(){
+  return [...document.querySelectorAll('#guest-list .guest-item.checked span')].map(el=>el.textContent.trim());
+}
+
+function getRSVPPayload(){
+  const guests = getSelectedGuests();
+  const note = document.querySelector('.rsvp-note').value.trim();
+  return {
+    inviteCode: currentInvite.code || DEFAULT_INVITE.code,
+    inviteTitle: currentInvite.title || DEFAULT_INVITE.title,
+    allowedGuests: currentInvite.guests || [],
+    guests,
+    note,
+    message:
+`Confirmación de asistencia
+Código invitación: ${currentInvite.code || DEFAULT_INVITE.code}
+Invitación para: ${currentInvite.title || DEFAULT_INVITE.title}
+Invitados base: ${(currentInvite.guests || []).join(', ') || 'No definido'}
+Asistentes confirmados: ${guests.length ? guests.join(', ') : 'Ninguno seleccionado'}
+Notas: ${note || 'Sin notas'}`
+  };
+}
+
+function confirmRSVP(){
+  const payload = getRSVPPayload();
+
+  if (RSVP_CONFIG.mode === 'mailto' && RSVP_CONFIG.email && !RSVP_CONFIG.email.includes('EJEMPLO')) {
+    const url = `mailto:${RSVP_CONFIG.email}?subject=${encodeURIComponent(RSVP_CONFIG.subject + ' · ' + payload.inviteTitle)}&body=${encodeURIComponent(payload.message)}`;
+    window.location.href = url;
+  } else if (RSVP_CONFIG.mode === 'whatsapp' && RSVP_CONFIG.whatsapp && RSVP_CONFIG.whatsapp !== '34600000000') {
+    const url = `https://wa.me/${RSVP_CONFIG.whatsapp}?text=${encodeURIComponent(payload.message)}`;
+    window.open(url, '_blank');
+  }
+
+  document.querySelector('.rsvp-btn').style.display = 'none';
+  document.getElementById('rsvp-success').style.display = 'block';
+}
+
+function initRSVPDestinationLabel(){
+  const box = document.getElementById('rsvp-destination');
+  let text = 'Ahora mismo esta confirmación no se envía a ningún sitio: solo muestra el mensaje de gracias.';
+  if (RSVP_CONFIG.mode === 'mailto') {
+    text = `Destino configurado: <strong>correo electrónico</strong> (${escapeHtml(RSVP_CONFIG.email)}).`;
+  } else if (RSVP_CONFIG.mode === 'whatsapp') {
+    text = `Destino configurado: <strong>WhatsApp</strong> (${escapeHtml(RSVP_CONFIG.whatsapp)}).`;
+  }
+  box.innerHTML = text;
+}
 
 /* PHOTOS */
-function loadPhoto(input,id){const f=input.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{const c=document.getElementById(id);c.querySelectorAll('span').forEach(s=>s.style.display='none');const img=document.createElement('img');img.src=e.target.result;c.appendChild(img);};r.readAsDataURL(f);}
-</script>
+function renderPhotos(){
+  const grid = document.getElementById('photos-grid');
+  grid.innerHTML = '';
+
+  PHOTO_SLOTS.forEach((photo, index)=>{
+    const card = document.createElement('div');
+    const hasImage = !!photo.src;
+    card.className = `photo-card${hasImage ? '' : ' empty'} gpu`;
+
+    if (hasImage) {
+      const img = document.createElement('img');
+      img.src = photo.src;
+      img.alt = photo.alt || `Foto ${index + 1}`;
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      img.style.objectPosition = photo.position || 'center center';
+      img.onerror = () => {
+        card.classList.add('empty');
+        card.innerHTML = `<div class="photo-fallback"><strong>FOTO ${index + 1}</strong><span>Coloca aquí tu imagen<br>(${img.src})</span></div>`;
+      };
+      card.appendChild(img);
+    } else {
+      card.classList.add('empty');
+      card.innerHTML = `<div class="photo-fallback"><strong>FOTO ${index + 1}</strong><span>Vertical 3:4<br>recomendada 1500 × 2000 px</span></div>`;
+    }
+
+    grid.appendChild(card);
+  });
+}
+
+function escapeHtml(str){
+  return str.replace(/[&<>"']/g, char => ({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    '"':'&quot;',
+    "'":'&#39;'
+  }[char]));
+}
+
+initInviteFromURL();
+initRSVPDestinationLabel();
+renderPhotos();</script>
 </body>
 </html>
